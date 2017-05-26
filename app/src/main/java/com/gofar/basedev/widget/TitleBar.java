@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.widght;
+package com.gofar.basedev.widget;
 
 import android.content.Context;
 import android.support.annotation.ColorInt;

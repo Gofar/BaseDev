@@ -24,7 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gofar.basedev.utils.ToastUtils;
-import com.gofar.basedev.widght.LoadingDialog;
+import com.gofar.basedev.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

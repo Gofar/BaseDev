@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.gofar.basedev.R;
-import com.gofar.basedev.widght.TitleBar;
+import com.gofar.basedev.widget.TitleBar;
 
 import butterknife.ButterKnife;
 

@@ -22,7 +22,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gofar.basedev.utils.ToastUtils;
-import com.gofar.basedev.widght.LoadingDialog;
+import com.gofar.basedev.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
