@@ -46,13 +46,16 @@ public abstract class BaseFragment extends Fragment {
         return setContentView(inflater, container);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView();
+        initData();
+    }
 
     protected View setContentView(LayoutInflater inflater, @Nullable ViewGroup container) {
         View parent = inflater.inflate(getLayoutId(), container, false);
         mBinder = ButterKnife.bind(this, parent);
-
-        initView();
-        initData();
         return parent;
     }
 

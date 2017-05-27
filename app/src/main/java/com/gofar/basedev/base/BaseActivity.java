@@ -19,10 +19,10 @@ package com.gofar.basedev.base;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import com.gofar.basedev.utils.ToastUtils;
 import com.gofar.basedev.widget.LoadingDialog;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -33,7 +33,7 @@ import butterknife.Unbinder;
  * Since: 1.0
  * Date: 2017/5/25 18:03
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
 
     private LoadingDialog mLoadingDialog;
     protected Unbinder mBinder;
