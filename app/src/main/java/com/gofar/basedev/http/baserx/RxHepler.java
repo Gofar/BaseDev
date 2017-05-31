@@ -17,15 +17,15 @@
 package com.gofar.basedev.http.baserx;
 
 
-import com.gofar.basedev.base.BaseActivity;
+import com.gofar.basedev.base.BaseView;
 import com.gofar.basedev.entity.BaseEntity;
 import com.gofar.basedev.http.HttpResultFun;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -37,18 +37,22 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class RxHepler {
 
-    public static <T> Observable<T> toSubscribe(Observable<BaseEntity<T>> observable, final RxAppCompatActivity activity) {
-        return observable.subscribeOn(Schedulers.io())
-                .map(new HttpResultFun<T>())
+    public static <T> Observable<T> toSubscribe(Observable<BaseEntity<T>> observable, final BaseView baseView) {
+        return observable.flatMap(new HttpResultFun<T>())
+                .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(@NonNull Disposable disposable) throws Exception {
-                        if (activity instanceof BaseActivity) {
-                            ((BaseActivity) activity).showLoadingDialog();
-                        }
+                        baseView.showLoading();
                     }
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .compose(activity.<T>bindToLifecycle());
+                .doAfterTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        baseView.hideLoadong();
+                    }
+                })
+                .compose(RxUtils.<T>bindToLifecycle(baseView));
     }
 }

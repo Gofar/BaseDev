@@ -19,6 +19,7 @@ package com.gofar.basedev;
 import android.view.View;
 
 import com.gofar.basedev.base.BaseCompatActivity;
+import com.gofar.basedev.base.BaseView;
 import com.gofar.basedev.entity.UserEntity;
 import com.gofar.basedev.http.ApiFactory;
 import com.gofar.basedev.http.baserx.ResultObserver;
@@ -32,7 +33,7 @@ import io.reactivex.annotations.NonNull;
  * Since: 1.0
  * Date: 2017/5/27 16:53
  */
-public class UserActivity extends BaseCompatActivity {
+public class UserActivity extends BaseCompatActivity implements BaseView{
     @Override
     protected void initView() {
 
@@ -52,5 +53,20 @@ public class UserActivity extends BaseCompatActivity {
     @Override
     protected View getCustomView() {
         return null;
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoadong() {
+
+    }
+
+    @Override
+    public void showMessage(String msg) {
+
     }
 }

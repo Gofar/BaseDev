@@ -56,11 +56,6 @@ public abstract class ResultObserver<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
-        RxAppCompatActivity activity = mActivity.get();
-        if (activity != null) {
-            if (activity instanceof BaseActivity) {
-                ((BaseActivity) activity).hideLoadingDialog();
-            }
-        }
+
     }
 }

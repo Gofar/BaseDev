@@ -18,6 +18,10 @@ package com.gofar.basedev.http;
 
 import com.gofar.basedev.entity.BaseEntity;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 
@@ -27,12 +31,20 @@ import io.reactivex.functions.Function;
  * Since: 1.0
  * Date: 2017/5/27 15:25
  */
-public class HttpResultFun<T> implements Function<BaseEntity<T>, T> {
+public class HttpResultFun<T> implements Function<BaseEntity<T>, ObservableSource<T>> {
+
     @Override
-    public T apply(@NonNull BaseEntity<T> baseEntity) throws Exception {
-        if (baseEntity.getCode() != 0) {
-            throw new ApiException(baseEntity.getCode());
+    public ObservableSource<T> apply(@NonNull final BaseEntity<T> baseEntity) throws Exception {
+        if (baseEntity.getCode() == 0) {
+            return Observable.create(new ObservableOnSubscribe<T>() {
+                @Override
+                public void subscribe(@NonNull ObservableEmitter<T> e) throws Exception {
+                    e.onNext(baseEntity.getData());
+                    e.onComplete();
+                }
+            });
+        } else {
+            return Observable.error(new ApiException(baseEntity.getCode()));
         }
-        return baseEntity.getData();
     }
 }
