@@ -20,13 +20,10 @@ package com.gofar.basedev.base;
  * Author: lcf
  * Description:
  * Since: 1.0
- * Date: 2017/5/31 10:10
+ * Date: 2017/6/1 10:25
  */
-public interface BaseView {
+public interface BaseListView extends BaseView {
+    void refresh();
 
-    void showLoading();
-
-    void hideLoading();
-
-    void showMessage(String msg);
+    void stop();
 }

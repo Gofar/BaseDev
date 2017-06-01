@@ -16,10 +16,7 @@
 
 package com.gofar.basedev.http.baserx;
 
-import com.gofar.basedev.base.BaseActivity;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
-import java.lang.ref.WeakReference;
+import com.gofar.basedev.base.BaseView;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -32,10 +29,11 @@ import io.reactivex.disposables.Disposable;
  * Date: 2017/5/27 16:11
  */
 public abstract class ResultObserver<T> implements Observer<T> {
-    private WeakReference<RxAppCompatActivity> mActivity;
+    private BaseView mView;
 
-    public ResultObserver(RxAppCompatActivity activity) {
-        this.mActivity = new WeakReference<>(activity);
+
+    public ResultObserver(BaseView view) {
+        this.mView = view;
     }
 
     @Override
@@ -46,12 +44,7 @@ public abstract class ResultObserver<T> implements Observer<T> {
     @Override
     public void onError(@NonNull Throwable e) {
         e.printStackTrace();
-        RxAppCompatActivity activity = mActivity.get();
-        if (activity != null) {
-            if (activity instanceof BaseActivity) {
-                ((BaseActivity) activity).showToast(e.getMessage());
-            }
-        }
+        mView.showMessage(e.getMessage());
     }
 
     @Override

@@ -50,9 +50,39 @@ public class RxHepler {
                 .doAfterTerminate(new Action() {
                     @Override
                     public void run() throws Exception {
-                        baseView.hideLoadong();
+                        baseView.hideLoading();
                     }
                 })
                 .compose(RxUtils.<T>bindToLifecycle(baseView));
+    }
+
+
+    public static <T> Observable<T> toSubscribeOn(Observable<BaseEntity<T>> observable, final BaseView baseView) {
+        return observable.flatMap(new HttpResultFun<T>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public static <T> Observable<T> toCache(Observable<T> observable, Consumer<T> consumer) {
+        return observable.observeOn(Schedulers.io())
+                .doOnNext(consumer);
+    }
+
+    public static <T> Observable<T> toShowLoading(Observable<T> observable, final BaseView view) {
+        return observable.doOnSubscribe(new Consumer<Disposable>() {
+            @Override
+            public void accept(@NonNull Disposable disposable) throws Exception {
+                view.showLoading();
+            }
+        }).subscribeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static <T> Observable<T> toObserveOn(Observable<T> observable, final BaseView view){
+        return observable.observeOn(AndroidSchedulers.mainThread())
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        view.hideLoading();
+                    }
+                }).compose(RxUtils.<T>bindToLifecycle(view));
     }
 }

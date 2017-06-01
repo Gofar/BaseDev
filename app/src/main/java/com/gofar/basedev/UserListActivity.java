@@ -16,24 +16,18 @@
 
 package com.gofar.basedev;
 
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gofar.basedev.base.BaseCompatActivity;
-import com.gofar.basedev.base.BaseView;
 
 /**
  * Author: lcf
  * Description:
  * Since: 1.0
- * Date: 2017/5/27 16:53
+ * Date: 2017/6/1 16:58
  */
-public class UserActivity extends BaseCompatActivity implements BaseView
-        ,BaseQuickAdapter.RequestLoadMoreListener
-        ,SwipeRefreshLayout.OnRefreshListener{
-    UserPresenter mPersenter;
-
+public class UserListActivity extends BaseCompatActivity {
     @Override
     protected void initView() {
 
@@ -41,36 +35,11 @@ public class UserActivity extends BaseCompatActivity implements BaseView
 
     @Override
     protected void initData() {
-        mPersenter.request();
+
     }
 
     @Override
     protected View getCustomView() {
-        return null;
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showMessage(String msg) {
-
-    }
-
-    @Override
-    public void onLoadMoreRequested() {
-
-    }
-
-    @Override
-    public void onRefresh() {
-
+        return LayoutInflater.from(this).inflate(R.layout.activity_user_list,null);
     }
 }

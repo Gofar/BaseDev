@@ -23,10 +23,30 @@ package com.gofar.basedev.base;
  * Date: 2017/5/31 17:45
  */
 public class BasePresenter<T extends BaseModel, R extends BaseView> {
-    private T mModel;
-    private R mView;
+    protected T mModel;
+    protected R mView;
 
-    private void onStart() {
-
+    public BasePresenter(T mModel, R mView) {
+        this.mModel = mModel;
+        this.mView = mView;
+        onStart();
     }
+
+    public void onStart() {
+        if (useEventBus()) {
+            // register EventBus
+        }
+    }
+
+    public void onDestory(){
+        if (useEventBus()){
+            // unregister EventBus
+        }
+    }
+
+    protected boolean useEventBus() {
+        return true;
+    }
+
+
 }
