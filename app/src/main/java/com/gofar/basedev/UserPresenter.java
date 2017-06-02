@@ -18,17 +18,11 @@ package com.gofar.basedev;
 
 import com.gofar.basedev.base.BasePresenter;
 import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.http.HttpResultFun;
 import com.gofar.basedev.http.baserx.ResultObserver;
-import com.gofar.basedev.http.baserx.RxHepler;
-import com.gofar.basedev.http.baserx.RxUtils;
+import com.gofar.basedev.http.baserx.RxHelper;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Author: lcf
@@ -43,49 +37,74 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
     }
 
     public void request() {
-        RxHepler.toSubscribe(mModel.register(), mView)
-                .subscribe(new Consumer<UserEntity>() {
-                    @Override
-                    public void accept(@NonNull UserEntity entity) throws Exception {
-                        mView.returnData(entity);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        mView.showMessage(throwable.getMessage());
-                    }
-                });
+//        RxHelper.toSubscribe(mModel.register(), mView)
+//                .subscribe(new Consumer<UserEntity>() {
+//                    @Override
+//                    public void accept(@NonNull UserEntity entity) throws Exception {
+//                        mView.returnData(entity);
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(@NonNull Throwable throwable) throws Exception {
+//                        mView.showMessage(throwable.getMessage());
+//                    }
+//                });
+//
+//        mModel.register()
+//                .flatMap(new HttpResultFun<UserEntity>())
+//                .doOnNext(new Consumer<UserEntity>() {
+//                    @Override
+//                    public void accept(@NonNull UserEntity entity) throws Exception {
+//                        // 缓存数据
+//                    }
+//                })
+//                .subscribeOn(Schedulers.io())
+//                .doOnSubscribe(new Consumer<Disposable>() {
+//                    @Override
+//                    public void accept(@NonNull Disposable disposable) throws Exception {
+//                        // 显示加载提示
+//                        mView.showLoading();
+//                    }
+//                })
+//                .subscribeOn(AndroidSchedulers.mainThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .doOnTerminate(new Action() {
+//                    @Override
+//                    public void run() throws Exception {
+//                        // 取消加载提示
+//                        mView.hideLoading();
+//                    }
+//                })
+//                .compose(RxUtils.<UserEntity>bindToLifecycle(mView))
+//                .subscribe(new ResultObserver<UserEntity>(mView) {
+//                    @Override
+//                    public void onNext(@NonNull UserEntity entity) {
+//                        mView.returnData(entity);
+//                    }
+//                });
+//
+//
+//        mModel.register().compose(new ObservableTransformer<BaseEntity<UserEntity>, UserEntity>() {
+//            @Override
+//            public ObservableSource<UserEntity> apply(@NonNull Observable<BaseEntity<UserEntity>> upstream) {
+//                return null;
+//            }
+//        });
 
         mModel.register()
-                .flatMap(new HttpResultFun<UserEntity>())
-                .doOnNext(new Consumer<UserEntity>() {
+                .compose(new RxHelper.SubscribeOnTransformer<UserEntity>())
+                .compose(new RxHelper.LoadingTransformer<UserEntity>(mView))
+                .compose(new RxHelper.CacheTransformer<>(new Consumer<UserEntity>() {
                     @Override
                     public void accept(@NonNull UserEntity entity) throws Exception {
-                        // 缓存数据
+
                     }
-                })
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(@NonNull Disposable disposable) throws Exception {
-                        // 显示加载提示
-                        mView.showLoading();
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnTerminate(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        // 取消加载提示
-                        mView.hideLoading();
-                    }
-                })
-                .compose(RxUtils.<UserEntity>bindToLifecycle(mView))
+                }))
+                .compose(new RxHelper.ObserverOnTransformer<UserEntity>(mView))
                 .subscribe(new ResultObserver<UserEntity>(mView) {
                     @Override
                     public void onNext(@NonNull UserEntity entity) {
-                        mView.returnData(entity);
+
                     }
                 });
     }

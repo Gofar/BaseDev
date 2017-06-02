@@ -23,4 +23,38 @@ package com.gofar.basedev.entity;
  * Date: 2017/5/27 15:36
  */
 public class UserEntity {
+
+    private int Id;
+
+    private String name;
+    private String mobile;
+
+    public UserEntity(String name, String mobile) {
+        this.name = name;
+        this.mobile = mobile;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 }

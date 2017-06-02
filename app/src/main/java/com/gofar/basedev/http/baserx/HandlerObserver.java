@@ -14,24 +14,27 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
+package com.gofar.basedev.http.baserx;
 
-import com.gofar.basedev.entity.BaseEntity;
-import com.gofar.basedev.entity.UserEntity;
-
-import java.util.List;
-
-import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Author: lcf
  * Description:
  * Since: 1.0
- * Date: 2017/5/27 15:08
+ * Date: 2017/6/2 15:50
  */
-public interface UserApi {
+public abstract class HandlerObserver<T> implements Observer<T> {
 
-    Observable<BaseEntity<UserEntity>> register();
+    @Override
+    public void onSubscribe(@NonNull Disposable d) {
 
-    Observable<BaseEntity<List<UserEntity>>> getUserList(int page, int limit);
+    }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

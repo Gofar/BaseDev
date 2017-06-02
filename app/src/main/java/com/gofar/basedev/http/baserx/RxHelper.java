@@ -19,9 +19,10 @@ package com.gofar.basedev.http.baserx;
 
 import com.gofar.basedev.base.BaseView;
 import com.gofar.basedev.entity.BaseEntity;
-import com.gofar.basedev.http.HttpResultFun;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -35,7 +36,7 @@ import io.reactivex.schedulers.Schedulers;
  * Since: 1.0
  * Date: 2017/5/27 15:11
  */
-public class RxHepler {
+public class RxHelper {
 
     public static <T> Observable<T> toSubscribe(Observable<BaseEntity<T>> observable, final BaseView baseView) {
         return observable.flatMap(new HttpResultFun<T>())
@@ -76,7 +77,7 @@ public class RxHepler {
         }).subscribeOn(AndroidSchedulers.mainThread());
     }
 
-    public static <T> Observable<T> toObserveOn(Observable<T> observable, final BaseView view){
+    public static <T> Observable<T> toObserveOn(Observable<T> observable, final BaseView view) {
         return observable.observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate(new Action() {
                     @Override
@@ -84,5 +85,85 @@ public class RxHepler {
                         view.hideLoading();
                     }
                 }).compose(RxUtils.<T>bindToLifecycle(view));
+    }
+
+    /**
+     * 指定事件发生在io线程
+     * 处理返回结果
+     *
+     * @param <T>
+     */
+    public static class SubscribeOnTransformer<T> implements ObservableTransformer<BaseEntity<T>, T> {
+
+        @Override
+        public ObservableSource<T> apply(@NonNull Observable<BaseEntity<T>> upstream) {
+            return upstream.flatMap(new HttpResultFun<T>())
+                    .subscribeOn(Schedulers.io());
+        }
+    }
+
+    /**
+     * 缓存数据
+     *
+     * @param <T>
+     */
+    public static class CacheTransformer<T> implements ObservableTransformer<T, T> {
+
+        private Consumer<T> consumer;
+
+        public CacheTransformer(Consumer<T> consumer) {
+            this.consumer = consumer;
+        }
+
+        @Override
+        public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
+            return upstream.observeOn(Schedulers.io())
+                    .doOnNext(consumer);
+        }
+    }
+
+    /**
+     * 显示加载loading
+     *
+     * @param <T>
+     */
+    public static class LoadingTransformer<T> implements ObservableTransformer<T, T> {
+        private Consumer<Disposable> consumer;
+
+        public LoadingTransformer(Consumer<Disposable> consumer) {
+            this.consumer = consumer;
+        }
+
+        @Override
+        public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
+            return upstream.doOnSubscribe(consumer).subscribeOn(AndroidSchedulers.mainThread());
+        }
+    }
+
+    /**
+     * 指定事件消费在main线程
+     * 使用RxLifecycle关联生命周期
+     * 隐藏加载loading
+     *
+     * @param <T>
+     */
+    public static class ObserverOnTransformer<T> implements ObservableTransformer<T, T> {
+        private BaseView baseView;
+
+        public ObserverOnTransformer(BaseView baseView) {
+            this.baseView = baseView;
+        }
+
+        @Override
+        public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
+            return upstream.observeOn(AndroidSchedulers.mainThread())
+//                    .doOnTerminate(new Action() {
+//                        @Override
+//                        public void run() throws Exception {
+//                            baseView.hideLoading();
+//                        }
+//                    })
+                    .compose(RxUtils.<T>bindToLifecycle(baseView));
+        }
     }
 }

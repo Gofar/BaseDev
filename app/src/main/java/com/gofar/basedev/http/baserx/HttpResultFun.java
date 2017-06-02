@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
+package com.gofar.basedev.http.baserx;
 
 import com.gofar.basedev.entity.BaseEntity;
+import com.gofar.basedev.http.ApiException;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;

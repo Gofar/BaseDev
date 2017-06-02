@@ -16,14 +16,28 @@
 
 package com.gofar.basedev.base;
 
+import java.util.List;
+
 /**
  * Author: lcf
  * Description:
  * Since: 1.0
  * Date: 2017/6/1 10:25
  */
-public interface BaseListView extends BaseView {
-    void refresh();
+public interface BaseListView<V> extends BaseView {
+    void showEmpty();
 
-    void stop();
+    void showRetry();
+
+    void refreshCompleted();
+
+    void loadMoreEnd(boolean gone);
+
+    void loadMoreFailed();
+
+    void loadMoreComplete();
+
+    void returnData(List<V> list);
+
+    void refreshData(List<V> list);
 }

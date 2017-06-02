@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
+package com.gofar.basedev;
 
+import com.gofar.basedev.base.BaseListView;
+import com.gofar.basedev.base.BaseModel;
 import com.gofar.basedev.entity.BaseEntity;
 import com.gofar.basedev.entity.UserEntity;
 
@@ -27,11 +29,14 @@ import io.reactivex.Observable;
  * Author: lcf
  * Description:
  * Since: 1.0
- * Date: 2017/5/27 15:08
+ * Date: 2017/6/2 10:43
  */
-public interface UserApi {
+public interface UserListContract {
+    interface View extends BaseListView<UserEntity> {
 
-    Observable<BaseEntity<UserEntity>> register();
+    }
 
-    Observable<BaseEntity<List<UserEntity>>> getUserList(int page, int limit);
+    interface Model extends BaseModel {
+        Observable<BaseEntity<List<UserEntity>>> getUserList(int page);
+    }
 }

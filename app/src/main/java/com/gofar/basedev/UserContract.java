@@ -25,5 +25,4 @@ public interface UserContract {
     interface Model extends BaseModel {
         Observable<BaseEntity<UserEntity>> register();
     }
-
 }

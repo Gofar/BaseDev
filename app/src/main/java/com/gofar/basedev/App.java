@@ -18,6 +18,8 @@ package com.gofar.basedev;
 
 import android.app.Application;
 
+import com.gofar.basedev.loading.LoadingAndRetryManager;
+
 /**
  * Author: lcf
  * Description: 自定义Application
@@ -28,5 +30,10 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // 设定加载布局
+        LoadingAndRetryManager.BASE_LOADING_LAYOUT_ID = R.layout.base_loading;
+        LoadingAndRetryManager.BASE_RETRY_LAYOUT_ID = R.layout.base_retry;
+        LoadingAndRetryManager.BASE_EMPTY_LAYOUT_ID = R.layout.base_empty;
     }
 }

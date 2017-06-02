@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
+package com.gofar.basedev;
 
-import com.gofar.basedev.entity.BaseEntity;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.gofar.basedev.entity.UserEntity;
-
-import java.util.List;
-
-import io.reactivex.Observable;
 
 /**
  * Author: lcf
  * Description:
  * Since: 1.0
- * Date: 2017/5/27 15:08
+ * Date: 2017/6/2 17:18
  */
-public interface UserApi {
+public class UserAdapter extends BaseQuickAdapter<UserEntity, BaseViewHolder> {
+    public UserAdapter() {
+        super(R.layout.item_user);
+    }
 
-    Observable<BaseEntity<UserEntity>> register();
-
-    Observable<BaseEntity<List<UserEntity>>> getUserList(int page, int limit);
+    @Override
+    protected void convert(BaseViewHolder helper, UserEntity item) {
+        helper.setText(R.id.tv_name, item.getName())
+                .setText(R.id.tv_mobile, item.getMobile());
+    }
 }
