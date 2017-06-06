@@ -24,10 +24,7 @@ import java.util.List;
  * Since: 1.0
  * Date: 2017/6/1 10:25
  */
-public interface BaseListView<V> extends BaseView {
-    void showEmpty();
-
-    void showRetry();
+public interface BaseListView<V> extends BaseView<List<V>> {
 
     void refreshCompleted();
 
@@ -36,8 +33,6 @@ public interface BaseListView<V> extends BaseView {
     void loadMoreFailed();
 
     void loadMoreComplete();
-
-    void returnData(List<V> list);
 
     void refreshData(List<V> list);
 }

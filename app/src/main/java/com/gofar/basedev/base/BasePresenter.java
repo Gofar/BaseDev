@@ -16,13 +16,15 @@
 
 package com.gofar.basedev.base;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Author: lcf
  * Description:
  * Since: 1.0
  * Date: 2017/5/31 17:45
  */
-public class BasePresenter<T extends BaseModel, R extends BaseView> {
+public class BasePresenter<T extends BaseModel, R extends BaseView<V>, V> {
     protected T mModel;
     protected R mView;
 
@@ -35,18 +37,40 @@ public class BasePresenter<T extends BaseModel, R extends BaseView> {
     public void onStart() {
         if (useEventBus()) {
             // register EventBus
+            EventBus.getDefault().register(this);
         }
     }
 
-    public void onDestory(){
-        if (useEventBus()){
+    public void onDestory() {
+        if (useEventBus()) {
             // unregister EventBus
+            EventBus.getDefault().unregister(this);
         }
+        mModel = null;
+        mView = null;
     }
 
+    /**
+     * 是否使用EventBus
+     * @return
+     */
     protected boolean useEventBus() {
         return true;
     }
 
+    protected void handlerLoading() {
+        mView.showLoading();
+    }
 
+    protected void handlerResult(V result) {
+        if (result == null) {
+            mView.showEmpty();
+        } else {
+            mView.returnData(result);
+        }
+    }
+
+    protected void handlerError() {
+        mView.showRetry();
+    }
 }

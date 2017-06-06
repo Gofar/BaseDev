@@ -22,11 +22,17 @@ package com.gofar.basedev.base;
  * Since: 1.0
  * Date: 2017/5/31 10:10
  */
-public interface BaseView {
+public interface BaseView<V> {
 
     void showLoading();
 
     void hideLoading();
+
+    void showEmpty();
+
+    void showRetry();
+
+    void returnData(V result);
 
     void showMessage(String msg);
 }

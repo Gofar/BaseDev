@@ -16,12 +16,16 @@
 
 package com.gofar.basedev;
 
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gofar.basedev.base.BaseCompatActivity;
-import com.gofar.basedev.base.BaseView;
+import com.gofar.basedev.entity.UserEntity;
+import com.gofar.basedev.loading.LoadingAndRetryManager;
+import com.gofar.basedev.loading.OnLoadingAndRetryListener;
+
+import butterknife.BindView;
 
 /**
  * Author: lcf
@@ -29,34 +33,48 @@ import com.gofar.basedev.base.BaseView;
  * Since: 1.0
  * Date: 2017/5/27 16:53
  */
-public class UserActivity extends BaseCompatActivity implements BaseView
-        ,BaseQuickAdapter.RequestLoadMoreListener
-        ,SwipeRefreshLayout.OnRefreshListener{
+public class UserActivity extends BaseCompatActivity implements UserContract.View {
     UserPresenter mPersenter;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_mobile)
+    TextView mTvMobile;
+
+    private View mView;
+
+    private LoadingAndRetryManager mLoadingAndRetryManager;
 
     @Override
     protected void initView() {
-
+        mLoadingAndRetryManager = LoadingAndRetryManager.generate(mView, new OnLoadingAndRetryListener() {
+            @Override
+            public void setRetryEvent(View retryView) {
+                showLoading();
+                mPersenter.request();
+            }
+        });
     }
 
     @Override
     protected void initData() {
+        showLoading();
         mPersenter.request();
     }
 
     @Override
     protected View getCustomView() {
-        return null;
+        mView = LayoutInflater.from(this).inflate(R.layout.activity_user, null);
+        return mView;
     }
 
     @Override
     public void showLoading() {
-
+        mLoadingAndRetryManager.showLoading();
     }
 
     @Override
     public void hideLoading() {
-
+        mLoadingAndRetryManager.showContent();
     }
 
     @Override
@@ -65,12 +83,18 @@ public class UserActivity extends BaseCompatActivity implements BaseView
     }
 
     @Override
-    public void onLoadMoreRequested() {
-
+    public void showEmpty() {
+        mLoadingAndRetryManager.showEmpty();
     }
 
     @Override
-    public void onRefresh() {
+    public void showRetry() {
+        mLoadingAndRetryManager.showRetry();
+    }
 
+    @Override
+    public void returnData(UserEntity entity) {
+        mTvName.setText(entity.getName());
+        mTvMobile.setText(entity.getMobile());
     }
 }

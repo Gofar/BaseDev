@@ -39,4 +39,9 @@ public interface Constants {
     String EXTRAS_FROM = "from";
     String EXTRAS_TITLE = "title";
 
+    /**
+     * 分页请求数量
+     */
+    int LIMIT_NUM=10;
+
 }

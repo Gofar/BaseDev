@@ -29,7 +29,7 @@ import java.util.List;
  * Since: 1.0
  * Date: 2017/6/2 16:08
  */
-public class BaseListPresenter<T extends BaseModel, R extends BaseListView<V>, V> extends BasePresenter<T, R> {
+public class BaseListPresenter<T extends BaseModel, R extends BaseListView<V>, V> extends BasePresenter<T, R, List<V>> {
 
     public static final int TYPE_FIRST_LOAD = 0;
     public static final int TYPE_LOAD_MORE = 1;
@@ -60,7 +60,7 @@ public class BaseListPresenter<T extends BaseModel, R extends BaseListView<V>, V
         }
     }
 
-    protected void handlerLoad() {
+    protected void handlerLoading() {
         if (mLoadType == TYPE_FIRST_LOAD) {
             mView.showLoading();
         }

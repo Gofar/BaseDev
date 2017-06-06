@@ -14,10 +14,10 @@ import io.reactivex.Observable;
  * Date: 2017/6/1 14:04
  */
 public interface UserContract {
-    interface View extends BaseView {
-        void refreshCompleted();
+    interface View extends BaseView<UserEntity> {
+        void showEmpty();
 
-        void loadMoreComplete();
+        void showRetry();
 
         void returnData(UserEntity entity);
     }

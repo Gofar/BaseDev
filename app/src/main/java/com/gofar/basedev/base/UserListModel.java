@@ -17,6 +17,7 @@
 package com.gofar.basedev.base;
 
 import com.gofar.basedev.UserListContract;
+import com.gofar.basedev.common.Constants;
 import com.gofar.basedev.entity.BaseEntity;
 import com.gofar.basedev.entity.UserEntity;
 import com.gofar.basedev.http.ApiFactory;
@@ -34,6 +35,6 @@ import io.reactivex.Observable;
 public class UserListModel implements UserListContract.Model {
     @Override
     public Observable<BaseEntity<List<UserEntity>>> getUserList(int page) {
-        return ApiFactory.getUserApi().getUserList(page, 15);
+        return ApiFactory.getUserApi().getUserList(page, Constants.LIMIT_NUM);
     }
 }
