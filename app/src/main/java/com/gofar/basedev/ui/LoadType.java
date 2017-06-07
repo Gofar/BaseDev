@@ -14,30 +14,25 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
-
-import com.gofar.basedev.entity.BaseEntity;
-import com.gofar.basedev.entity.UserEntity;
-
-import java.util.List;
-
-import io.reactivex.Observable;
+package com.gofar.basedev.ui;
 
 /**
  * Author: lcf
- * Description:
+ * Description: 加载类型
  * Since: 1.0
- * Date: 2017/5/27 15:08
+ * Date: 2017/6/7 16:04
  */
-public interface UserApi {
-
-    Observable<BaseEntity<UserEntity>> register();
-
-    Observable<BaseEntity<UserEntity>> login(String userName, String password);
-
-    Observable<BaseEntity> changePsd(String oldPsd, String newPsd);
-
-    Observable<BaseEntity<List<UserEntity>>> getUserList(int page, int limit);
-
-    Observable<BaseEntity<UserEntity>> getUserDetails(int UserId);
+public interface LoadType {
+    /**
+     * 第一次加载（包括重试）
+     */
+    int TYPE_FIRST_LOAD = 0;
+    /**
+     * 加载更多
+     */
+    int TYPE_LOAD_MORE = 1;
+    /**
+     * 刷新
+     */
+    int TYPE_REFRESH = 2;
 }

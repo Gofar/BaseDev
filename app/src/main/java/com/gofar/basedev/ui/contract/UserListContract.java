@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
+package com.gofar.basedev.ui.contract;
 
 import com.gofar.basedev.entity.BaseEntity;
 import com.gofar.basedev.entity.UserEntity;
+import com.gofar.basedev.mvp.BaseModel;
+import com.gofar.basedev.mvp.BaseView;
 
 import java.util.List;
 
@@ -27,17 +29,29 @@ import io.reactivex.Observable;
  * Author: lcf
  * Description:
  * Since: 1.0
- * Date: 2017/5/27 15:08
+ * Date: 2017/6/7 15:52
  */
-public interface UserApi {
+public interface UserListContract {
 
-    Observable<BaseEntity<UserEntity>> register();
+    interface View extends BaseView {
+        void showEmpty();
 
-    Observable<BaseEntity<UserEntity>> login(String userName, String password);
+        void showRetry();
 
-    Observable<BaseEntity> changePsd(String oldPsd, String newPsd);
+        void refreshComplete();
 
-    Observable<BaseEntity<List<UserEntity>>> getUserList(int page, int limit);
+        void loadComplete();
 
-    Observable<BaseEntity<UserEntity>> getUserDetails(int UserId);
+        void loadMoreEnd(boolean gone);
+
+        void loadMoreFailed();
+
+        void returnData(List<UserEntity> list);
+
+        void refreshData(List<UserEntity> list);
+    }
+
+    interface Model extends BaseModel {
+        Observable<BaseEntity<List<UserEntity>>> getUserList(int page);
+    }
 }

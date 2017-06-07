@@ -14,30 +14,13 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
-
-import com.gofar.basedev.entity.BaseEntity;
-import com.gofar.basedev.entity.UserEntity;
-
-import java.util.List;
-
-import io.reactivex.Observable;
+package com.gofar.basedev.mvp;
 
 /**
  * Author: lcf
  * Description:
  * Since: 1.0
- * Date: 2017/5/27 15:08
+ * Date: 2017/5/31 10:11
  */
-public interface UserApi {
-
-    Observable<BaseEntity<UserEntity>> register();
-
-    Observable<BaseEntity<UserEntity>> login(String userName, String password);
-
-    Observable<BaseEntity> changePsd(String oldPsd, String newPsd);
-
-    Observable<BaseEntity<List<UserEntity>>> getUserList(int page, int limit);
-
-    Observable<BaseEntity<UserEntity>> getUserDetails(int UserId);
+public interface BaseModel {
 }
