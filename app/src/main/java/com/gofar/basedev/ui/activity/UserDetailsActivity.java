@@ -44,6 +44,8 @@ public class UserDetailsActivity extends BaseCompatActivity implements UserDetai
                 mPresenter.request(1);
             }
         });
+
+        mPresenter = new UserDetailsPresenter(this);
     }
 
     @Override

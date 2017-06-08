@@ -17,8 +17,8 @@
 package com.gofar.basedev.http.baserx;
 
 
-import com.gofar.basedev.base.BaseView;
 import com.gofar.basedev.entity.BaseEntity;
+import com.gofar.basedev.mvp.BaseView;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -26,7 +26,6 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -38,58 +37,10 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class RxHelper {
 
-    public static <T> Observable<T> toSubscribe(Observable<BaseEntity<T>> observable, final BaseView baseView) {
-        return observable.flatMap(new HttpResultFun<T>())
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(@NonNull Disposable disposable) throws Exception {
-                        baseView.showLoading();
-                    }
-                }).subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        baseView.hideLoading();
-                    }
-                })
-                .compose(RxUtils.<T>bindToLifecycle(baseView));
-    }
-
-
-    public static <T> Observable<T> toSubscribeOn(Observable<BaseEntity<T>> observable, final BaseView baseView) {
-        return observable.flatMap(new HttpResultFun<T>())
-                .subscribeOn(Schedulers.io());
-    }
-
-    public static <T> Observable<T> toCache(Observable<T> observable, Consumer<T> consumer) {
-        return observable.observeOn(Schedulers.io())
-                .doOnNext(consumer);
-    }
-
-    public static <T> Observable<T> toShowLoading(Observable<T> observable, final BaseView view) {
-        return observable.doOnSubscribe(new Consumer<Disposable>() {
-            @Override
-            public void accept(@NonNull Disposable disposable) throws Exception {
-                view.showLoading();
-            }
-        }).subscribeOn(AndroidSchedulers.mainThread());
-    }
-
-    public static <T> Observable<T> toObserveOn(Observable<T> observable, final BaseView view) {
-        return observable.observeOn(AndroidSchedulers.mainThread())
-                .doOnTerminate(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        view.hideLoading();
-                    }
-                }).compose(RxUtils.<T>bindToLifecycle(view));
-    }
-
     /**
      * 指定事件发生在io线程
-     * 处理返回结果
+     * 转换返回结果
+     * 错误处理
      *
      * @param <T>
      */
@@ -103,8 +54,22 @@ public class RxHelper {
     }
 
     /**
+     * 指定事件发生在io线程
+     * 不转换返回结果
+     * 错误处理
+     */
+    public static class SubscribeOnTransformer1 implements ObservableTransformer<BaseEntity, BaseEntity> {
+
+        @Override
+        public ObservableSource<BaseEntity> apply(@NonNull Observable<BaseEntity> upstream) {
+            return upstream.flatMap(new HttpResultFun1())
+                    .subscribeOn(Schedulers.io());
+        }
+    }
+
+    /**
      * 缓存数据
-     *
+     * 如保存到SharedPreferences
      * @param <T>
      */
     public static class CacheTransformer<T> implements ObservableTransformer<T, T> {
@@ -157,12 +122,6 @@ public class RxHelper {
         @Override
         public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
             return upstream.observeOn(AndroidSchedulers.mainThread())
-//                    .doOnTerminate(new Action() {
-//                        @Override
-//                        public void run() throws Exception {
-//                            baseView.hideLoading();
-//                        }
-//                    })
                     .compose(RxUtils.<T>bindToLifecycle(baseView));
         }
     }

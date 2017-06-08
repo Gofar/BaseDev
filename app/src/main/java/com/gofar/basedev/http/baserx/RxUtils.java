@@ -16,7 +16,7 @@
 
 package com.gofar.basedev.http.baserx;
 
-import com.gofar.basedev.base.BaseView;
+import com.gofar.basedev.mvp.BaseView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;

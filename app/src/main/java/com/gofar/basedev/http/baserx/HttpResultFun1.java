@@ -16,39 +16,28 @@
 
 package com.gofar.basedev.http.baserx;
 
-import com.gofar.basedev.base.BaseView;
+import com.gofar.basedev.entity.BaseEntity;
+import com.gofar.basedev.http.ApiException;
 
-import io.reactivex.Observer;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 
 /**
  * Author: lcf
  * Description:
  * Since: 1.0
- * Date: 2017/5/27 16:11
+ * Date: 2017/6/8 10:04
  */
-public abstract class ResultObserver<T> implements Observer<T> {
-    private BaseView mView;
-
-
-    public ResultObserver(BaseView view) {
-        this.mView = view;
-    }
+public class HttpResultFun1 implements Function<BaseEntity, ObservableSource<BaseEntity>> {
 
     @Override
-    public void onSubscribe(@NonNull Disposable d) {
-
-    }
-
-    @Override
-    public void onError(@NonNull Throwable e) {
-        e.printStackTrace();
-        mView.showMessage(e.getMessage());
-    }
-
-    @Override
-    public void onComplete() {
-
+    public Observable<BaseEntity> apply(@NonNull BaseEntity baseEntity) throws Exception {
+        if (baseEntity.getCode() == 0) {
+            return Observable.just(baseEntity);
+        } else {
+            return Observable.error(new ApiException(baseEntity.getCode()));
+        }
     }
 }

@@ -14,24 +14,27 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.ui;
+package com.gofar.basedev.ui.adapter;
 
-import com.gofar.basedev.mvp.BaseModel;
-import com.gofar.basedev.mvp.BaseView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.gofar.basedev.R;
+import com.gofar.basedev.entity.UserEntity;
 
 /**
  * Author: lcf
  * Description:
  * Since: 1.0
- * Date: 2017/6/7 11:40
+ * Date: 2017/6/2 17:18
  */
-public interface UserItemContract {
-
-    interface Model extends BaseModel {
-
+public class UserAdapter extends BaseQuickAdapter<UserEntity, BaseViewHolder> {
+    public UserAdapter() {
+        super(R.layout.item_user);
     }
 
-    interface View extends BaseView {
-
+    @Override
+    protected void convert(BaseViewHolder helper, UserEntity item) {
+        helper.setText(R.id.tv_name, item.getName())
+                .setText(R.id.tv_mobile, item.getMobile());
     }
 }

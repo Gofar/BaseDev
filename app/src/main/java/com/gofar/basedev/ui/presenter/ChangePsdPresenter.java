@@ -26,7 +26,6 @@ import com.gofar.basedev.ui.model.ChangePsdModel;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Author: lcf
@@ -57,7 +56,7 @@ public class ChangePsdPresenter extends BasePresenter<ChangePsdContract.Model, C
 
     public void changePsd(String oldPsd, String newPsd) {
         mModel.changePsd(oldPsd, newPsd)
-                .subscribeOn(Schedulers.io())
+                .compose(new RxHelper.SubscribeOnTransformer1())
                 .compose(new RxHelper.LoadingTransformer<BaseEntity>(new Consumer<Disposable>() {
                     @Override
                     public void accept(@NonNull Disposable disposable) throws Exception {

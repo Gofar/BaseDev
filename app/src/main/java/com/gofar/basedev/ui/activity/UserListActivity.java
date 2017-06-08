@@ -24,7 +24,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gofar.basedev.R;
-import com.gofar.basedev.UserAdapter;
+import com.gofar.basedev.ui.adapter.UserAdapter;
 import com.gofar.basedev.base.BaseCompatActivity;
 import com.gofar.basedev.entity.UserEntity;
 import com.gofar.basedev.loading.LoadingAndRetryManager;
@@ -63,7 +63,7 @@ public class UserListActivity extends BaseCompatActivity implements UserListCont
         mLoadingAndRetryManager = LoadingAndRetryManager.generate(mView, new OnLoadingAndRetryListener() {
             @Override
             public void setRetryEvent(View retryView) {
-
+                mPresenter.request();
             }
         });
 
