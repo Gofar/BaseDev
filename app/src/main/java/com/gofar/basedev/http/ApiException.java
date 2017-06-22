@@ -18,7 +18,7 @@ package com.gofar.basedev.http;
 
 /**
  * Author: lcf
- * Description:
+ * Description: 自定义错误类
  * Since: 1.0
  * Date: 2017/5/27 15:07
  */
