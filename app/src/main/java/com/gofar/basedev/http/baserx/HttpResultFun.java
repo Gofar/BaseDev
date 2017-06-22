@@ -26,7 +26,7 @@ import io.reactivex.functions.Function;
 
 /**
  * Author: lcf
- * Description:
+ * Description: 判断请求结果是否成功，错误处理；将返回数据转为需要的T
  * Since: 1.0
  * Date: 2017/5/27 15:25
  */
@@ -34,7 +34,7 @@ public class HttpResultFun<T> implements Function<BaseEntity<T>, ObservableSourc
 
     @Override
     public ObservableSource<T> apply(@NonNull final BaseEntity<T> baseEntity) throws Exception {
-        if (baseEntity.getCode() == 0) {
+        if (baseEntity.isSuccess()) {
             return Observable.just(baseEntity.getData());
         } else {
             return Observable.error(new ApiException(baseEntity.getCode()));

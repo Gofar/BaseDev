@@ -23,7 +23,7 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 
 /**
  * Author: lcf
- * Description:
+ * Description: 利用RxLifecycle2绑定生命周期
  * Since: 1.0
  * Date: 2017/5/31 10:12
  */

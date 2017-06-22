@@ -19,8 +19,8 @@ package com.gofar.basedev.base;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
-import com.gofar.basedev.utils.ToastUtils;
 import com.gofar.basedev.widget.LoadingDialog;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -101,6 +101,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param msg 文本
      */
     public void showToast(String msg) {
-        ToastUtils.showShort(this, msg);
+        //ToastUtils.showShort(this, msg);
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

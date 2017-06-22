@@ -14,27 +14,14 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http.baserx;
-
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
+package com.gofar.basedev.http;
 
 /**
  * Author: lcf
- * Description: 回调结果处理
+ * Description: 网络请求返回码
  * Since: 1.0
- * Date: 2017/6/2 15:50
+ * Date: 2017/6/22 15:51
  */
-public abstract class HandlerObserver<T> implements Observer<T> {
-
-    @Override
-    public void onSubscribe(@NonNull Disposable d) {
-
-    }
-
-    @Override
-    public void onComplete() {
-
-    }
+public class StatusCode {
+    public static final int SUCCESS=0;
 }

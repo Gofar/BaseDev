@@ -31,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Author: lcf
- * Description:
+ * Description: RxJava帮助类，将多个操作合并为自定义ObservableTransformer
  * Since: 1.0
  * Date: 2017/5/27 15:11
  */

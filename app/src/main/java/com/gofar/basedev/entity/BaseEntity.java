@@ -16,9 +16,11 @@
 
 package com.gofar.basedev.entity;
 
+import com.gofar.basedev.http.StatusCode;
+
 /**
  * Author: lcf
- * Description:
+ * Description: 网络请求返回基类
  * Since: 1.0
  * Date: 2017/5/27 15:26
  */
@@ -50,5 +52,14 @@ public class BaseEntity<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    /**
+     * 判断网络请求是否成功
+     *
+     * @return true or false
+     */
+    public boolean isSuccess() {
+        return code == StatusCode.SUCCESS;
     }
 }

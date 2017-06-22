@@ -48,7 +48,7 @@ public abstract class BasePresenter<M extends BaseModel, V extends BaseView> {
     }
 
     protected boolean useEventBus() {
-        return true;
+        return false;
     }
 
     protected abstract void handlerLoading();
