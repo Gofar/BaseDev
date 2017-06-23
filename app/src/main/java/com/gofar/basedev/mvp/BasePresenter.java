@@ -31,9 +31,10 @@ public abstract class BasePresenter<M extends BaseModel, V extends BaseView> {
     public BasePresenter(M mModel, V mView) {
         this.mModel = mModel;
         this.mView = mView;
+        onStart();
     }
 
-    protected void onStart() {
+    private void onStart() {
         if (useEventBus()) {
             EventBus.getDefault().register(this);
         }

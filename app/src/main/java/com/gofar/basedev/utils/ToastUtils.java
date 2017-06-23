@@ -23,11 +23,10 @@ import android.widget.Toast;
 
 /**
  * Author: lcf
- * Description: Toast工具类（静态Toast持有Context导致内存泄漏，废弃）
+ * Description: Toast工具类
  * Since: 1.0
  * Date: 2017/5/26 11:01
  */
-@Deprecated
 public class ToastUtils {
     private static Handler mHandler = new Handler(Looper.getMainLooper());
     private static Toast mToast = null;
@@ -102,7 +101,7 @@ public class ToastUtils {
                     mToast.setText(message);
                     mToast.setDuration(duration);
                 } else {
-                    mToast = Toast.makeText(context, message, duration);
+                    mToast = Toast.makeText(context.getApplicationContext(), message, duration);
                 }
                 mToast.show();
             }

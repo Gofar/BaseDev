@@ -22,8 +22,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.gofar.basedev.utils.ToastUtils;
 import com.gofar.basedev.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -110,7 +110,6 @@ public abstract class BaseFragment extends Fragment {
         if (getActivity() == null || !isAdded() || getActivity().isFinishing()) {
             return;
         }
-        //ToastUtils.showShort(getContext(), msg);
-        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();;
+        ToastUtils.showShort(getContext(), msg);
     }
 }
