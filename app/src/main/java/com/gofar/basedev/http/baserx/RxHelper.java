@@ -18,6 +18,7 @@ package com.gofar.basedev.http.baserx;
 
 
 import com.gofar.basedev.entity.BaseEntity;
+import com.gofar.basedev.mn.BasePresenter;
 import com.gofar.basedev.mvp.BaseView;
 
 import io.reactivex.Observable;
@@ -70,6 +71,7 @@ public class RxHelper {
     /**
      * 缓存数据
      * 如保存到SharedPreferences
+     *
      * @param <T>
      */
     public static class CacheTransformer<T> implements ObservableTransformer<T, T> {
@@ -125,4 +127,38 @@ public class RxHelper {
                     .compose(RxUtils.<T>bindToLifecycle(baseView));
         }
     }
+
+    public static void doRx(Observable<BaseEntity> observable, final BasePresenter presenter, boolean isCache) {
+        observable.compose(new SubscribeOnTransformer1())
+                .compose(new LoadingTransformer<BaseEntity>(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(@NonNull Disposable disposable) throws Exception {
+                        presenter.onHandlerLoading();
+                    }
+                }))
+                .compose(new ObserverOnTransformer<BaseEntity>(presenter.getView()))
+                .subscribe(new HandlerObserver<BaseEntity>() {
+                    @Override
+                    public void onNext(@NonNull BaseEntity entity) {
+                        presenter.onHandlerResult(entity);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        presenter.onHandlerError(e);
+                    }
+                });
+
+    }
+
+    public static <T> void doRx2(Observable<BaseEntity<T>> observable) {
+        observable.compose(new SubscribeOnTransformer<T>())
+                .compose(new LoadingTransformer<T>(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(@NonNull Disposable disposable) throws Exception {
+
+                    }
+                }));
+    }
+
 }
