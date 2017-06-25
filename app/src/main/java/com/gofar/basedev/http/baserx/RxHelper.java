@@ -128,6 +128,12 @@ public class RxHelper {
         }
     }
 
+    /**
+     * 封装网络请求
+     * @param observable 目标Observable
+     * @param presenter BasePresenter
+     * @param isCache 是否缓存
+     */
     public static void doRx(Observable<BaseEntity> observable, final BasePresenter presenter, boolean isCache) {
         observable.compose(new SubscribeOnTransformer1())
                 .compose(new LoadingTransformer<BaseEntity>(new Consumer<Disposable>() {
@@ -151,14 +157,33 @@ public class RxHelper {
 
     }
 
-    public static <T> void doRx2(Observable<BaseEntity<T>> observable) {
+    /**
+     * 封装网络请求
+     * @param observable 目标Observable
+     * @param presenter BasePresenter
+     * @param isCache 是否缓存
+     * @param <T> 需要转换的数据类型
+     */
+    public static <T> void doRx2(Observable<BaseEntity<T>> observable, final BasePresenter presenter, boolean isCache) {
         observable.compose(new SubscribeOnTransformer<T>())
                 .compose(new LoadingTransformer<T>(new Consumer<Disposable>() {
                     @Override
                     public void accept(@NonNull Disposable disposable) throws Exception {
-
+                        presenter.onHandlerLoading();
                     }
-                }));
+                }))
+                .compose(new ObserverOnTransformer<T>(presenter.getView()))
+                .subscribe(new HandlerObserver<T>() {
+                    @Override
+                    public void onNext(@NonNull T t) {
+                        presenter.onHandlerResult(t);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        presenter.onHandlerError(e);
+                    }
+                });
     }
 
 }
