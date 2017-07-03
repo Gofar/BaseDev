@@ -130,11 +130,11 @@ public class RxHelper {
 
     /**
      * 封装网络请求
+     *
      * @param observable 目标Observable
-     * @param presenter BasePresenter
-     * @param isCache 是否缓存
+     * @param presenter  BasePresenter
      */
-    public static void doRx(Observable<BaseEntity> observable, final BasePresenter presenter, boolean isCache) {
+    public static void doRx(Observable<BaseEntity> observable, final BasePresenter presenter) {
         observable.compose(new SubscribeOnTransformer1())
                 .compose(new LoadingTransformer<BaseEntity>(new Consumer<Disposable>() {
                     @Override
@@ -159,12 +159,12 @@ public class RxHelper {
 
     /**
      * 封装网络请求
+     *
      * @param observable 目标Observable
-     * @param presenter BasePresenter
-     * @param isCache 是否缓存
-     * @param <T> 需要转换的数据类型
+     * @param presenter  BasePresenter
+     * @param <T>        需要转换的数据类型
      */
-    public static <T> void doRx2(Observable<BaseEntity<T>> observable, final BasePresenter presenter, boolean isCache) {
+    public static <T> void doRx2(Observable<BaseEntity<T>> observable, final BasePresenter presenter) {
         observable.compose(new SubscribeOnTransformer<T>())
                 .compose(new LoadingTransformer<T>(new Consumer<Disposable>() {
                     @Override
@@ -186,7 +186,85 @@ public class RxHelper {
                 });
     }
 
-    public static <T> void doRx(Observable<T> observable,Class<?> clss,BasePresenter presenter){
-        //observable.compose(clss==null?new SubscribeOnTransformer1():new SubscribeOnTransformer<clss>());
+    public static <T> void doRx3(Observable<BaseEntity<T>> observable, final BasePresenter presenter) {
+        observable.compose(new SubscribeOnTransformer<T>())
+                .compose(new LoadingTransformer<T>(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(@NonNull Disposable disposable) throws Exception {
+                        presenter.onHandlerLoading();
+                    }
+                }))
+                .compose(new CacheTransformer<T>(new Consumer<T>() {
+                    @Override
+                    public void accept(@NonNull T t) throws Exception {
+                        presenter._storeToDisk(true,t);
+                    }
+                }))
+                .compose(new ObserverOnTransformer<T>(presenter.getView()))
+                .subscribe(new HandlerObserver<T>() {
+                    @Override
+                    public void onNext(@NonNull T t) {
+                        presenter.onHandlerResult(t);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        presenter.onHandlerError(e);
+                    }
+                });
     }
+
+
+    /**
+     * 封装网络请求
+     *
+     * @param observable 目标Observable
+     * @param presenter  BasePresenter
+     * @param isCache    是否缓存
+     * @param <T>        需要转换的数据类型
+     */
+    public static <T> void doRx4(Observable<BaseEntity<T>> observable, final BasePresenter presenter, boolean isCache) {
+        if (isCache) {
+            doRx3(observable, presenter);
+        } else {
+            doRx2(observable, presenter);
+        }
+    }
+
+    /**
+     * 封装网络请求
+     *
+     * @param observable 目标Observable
+     * @param presenter  BasePresenter
+     * @param isCache    是否缓存
+     * @param <T>        需要转换的数据类型
+     */
+    public static <T> void doRx5(Observable<BaseEntity<T>> observable, final BasePresenter presenter, final boolean isCache) {
+        observable.compose(new SubscribeOnTransformer<T>())
+                .compose(new LoadingTransformer<T>(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(@NonNull Disposable disposable) throws Exception {
+                        presenter.onHandlerLoading();
+                    }
+                }))
+                .compose(new CacheTransformer<T>(new Consumer<T>() {
+                    @Override
+                    public void accept(@NonNull T t) throws Exception {
+                        presenter._storeToDisk(isCache, t);
+                    }
+                }))
+                .compose(new ObserverOnTransformer<T>(presenter.getView()))
+                .subscribe(new HandlerObserver<T>() {
+                    @Override
+                    public void onNext(@NonNull T t) {
+                        presenter.onHandlerResult(t);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        presenter.onHandlerError(e);
+                    }
+                });
+    }
+
 }

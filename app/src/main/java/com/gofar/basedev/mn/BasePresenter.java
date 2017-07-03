@@ -25,7 +25,7 @@ import com.gofar.basedev.mvp.BaseView;
  * Since: 1.0
  * Date: 2017/6/22 17:45
  */
-public abstract class BasePresenter<M extends BaseModel, V extends BaseView, T> implements OnHandlerListener<T> {
+public abstract class BasePresenter<M extends BaseModel, V extends BaseView, T> implements OnHandlerListener<T>, OnStoreListener<T> {
     protected M mModel;
     protected V mView;
 
@@ -46,5 +46,12 @@ public abstract class BasePresenter<M extends BaseModel, V extends BaseView, T> 
 
     public V getView() {
         return mView;
+    }
+
+    public void _storeToDisk(boolean need, T t) {
+        if (!need) {
+            return;
+        }
+        storeToDisk(t);
     }
 }
