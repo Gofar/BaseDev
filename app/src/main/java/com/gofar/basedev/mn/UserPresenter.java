@@ -46,4 +46,8 @@ public class UserPresenter extends BasePresenter<BaseModel,BaseView,BaseEntity>{
 
     }
 
+    @Override
+    public void storeToDisk(BaseEntity entity) {
+
+    }
 }
