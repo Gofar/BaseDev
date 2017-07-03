@@ -82,7 +82,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 展示加载弹窗
      */
     public void showLoadingDialog() {
-        mLoadingDialog = LoadingDialog.newInstance();
+        if (mLoadingDialog == null) {
+            mLoadingDialog = LoadingDialog.newInstance();
+        }
         mLoadingDialog.show(getSupportFragmentManager());
     }
 

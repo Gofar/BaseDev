@@ -16,9 +16,14 @@
 
 package com.gofar.basedev.utils;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Environment;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Author: lcf
@@ -43,5 +48,41 @@ public class FileUtils {
         } else {
             return "";
         }
+    }
+
+    /**
+     * 复制assets下的资源到手机上
+     * @param context 上下文
+     * @param resName 资源名
+     * @param path 路径
+     * @param name 文件名
+     * @return
+     */
+    public static File getVideoPath(Context context, String resName, String path, String name) {
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(dir, name);
+        if (!file.exists()) {
+            AssetManager am = context.getAssets();
+            InputStream in = null;
+            FileOutputStream fo = null;
+            try {
+                in = am.open(resName);
+                fo = new FileOutputStream(file);
+                byte[] b = new byte[1024];
+                int len = -1;
+                while ((len = in.read(b)) != -1) {
+                    fo.write(b, 0, len);
+                }
+                fo.flush();
+                fo.close();
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return file;
     }
 }

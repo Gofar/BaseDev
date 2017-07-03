@@ -81,8 +81,7 @@ public class UserListPresenter extends BasePresenter<BaseModel, BaseView, List<U
                     }
                 });
 
-
-        RxHelper.doRx2(ApiFactory.getUserApi().getUserList(mHelper.mPage, 10),this,false);
+        RxHelper.doRx2(ApiFactory.getUserApi().getUserList(mHelper.mPage, 10), this, false);
         RxHelper.doRx(ApiFactory.getUserApi().changePsd("", ""), this, false);
     }
 }

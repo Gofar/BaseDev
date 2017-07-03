@@ -186,4 +186,7 @@ public class RxHelper {
                 });
     }
 
+    public static <T> void doRx(Observable<T> observable,Class<?> clss,BasePresenter presenter){
+        //observable.compose(clss==null?new SubscribeOnTransformer1():new SubscribeOnTransformer<clss>());
+    }
 }
