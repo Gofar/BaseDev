@@ -45,7 +45,6 @@ public class UserListPresenter extends BasePresenter<BaseModel, BaseView, List<U
 
     @Override
     public void onHandlerLoading() {
-
     }
 
     @Override

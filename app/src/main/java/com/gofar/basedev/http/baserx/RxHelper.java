@@ -19,6 +19,7 @@ package com.gofar.basedev.http.baserx;
 
 import com.gofar.basedev.entity.BaseEntity;
 import com.gofar.basedev.mn.BasePresenter;
+import com.gofar.basedev.mvp.BaseModel;
 import com.gofar.basedev.mvp.BaseView;
 
 import io.reactivex.Observable;
@@ -197,7 +198,7 @@ public class RxHelper {
                 .compose(new CacheTransformer<T>(new Consumer<T>() {
                     @Override
                     public void accept(@NonNull T t) throws Exception {
-                        presenter._storeToDisk(true,t);
+                        presenter._storeToDisk(true, t);
                     }
                 }))
                 .compose(new ObserverOnTransformer<T>(presenter.getView()))
@@ -239,7 +240,7 @@ public class RxHelper {
      * @param isCache    是否缓存
      * @param <T>        需要转换的数据类型
      */
-    public static <T> void doRx5(Observable<BaseEntity<T>> observable, final BasePresenter presenter, final boolean isCache) {
+    public static <T> void doRx5(Observable<BaseEntity<T>> observable, final BasePresenter<BaseModel, BaseView, T> presenter, final boolean isCache) {
         observable.compose(new SubscribeOnTransformer<T>())
                 .compose(new LoadingTransformer<T>(new Consumer<Disposable>() {
                     @Override
