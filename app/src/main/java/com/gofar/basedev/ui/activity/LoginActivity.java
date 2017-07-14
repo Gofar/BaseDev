@@ -16,6 +16,9 @@
 
 package com.gofar.basedev.ui.activity;
 
+import android.graphics.Color;
+import android.os.Build;
+
 import com.gofar.basedev.base.BaseActivity;
 import com.gofar.basedev.ui.contract.LoginContract;
 
@@ -33,7 +36,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     protected void initView() {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 
     @Override
