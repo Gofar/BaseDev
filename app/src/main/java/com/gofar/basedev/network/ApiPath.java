@@ -24,5 +24,6 @@ package com.gofar.basedev.network;
  */
 
 public class ApiPath {
+    // https://api.github.com/
     public static String BASE_URL = "http://gank.io/api/";
 }
