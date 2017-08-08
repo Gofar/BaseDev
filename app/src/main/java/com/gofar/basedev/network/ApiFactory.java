@@ -14,36 +14,27 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
+package com.gofar.basedev.network;
 
 /**
  * Author: lcf
- * Description: 自定义错误类
+ * Description:
  * Since: 1.0
- * Date: 2017/5/27 15:07
+ * Date: 2017/4/24 19:19
  */
-public class ApiException extends RuntimeException {
 
-    public ApiException(String msg) {
-        super(msg);
+public class ApiFactory {
+    private static UserApi mUserApi;
+
+    private static Api getDefault() {
+        return Api.getInstance();
     }
 
-    public ApiException(int code) {
-        this(getMsg(code));
-    }
-
-    /**
-     * 将code转为错误信息
-     * @param code code
-     * @return
-     */
-    private static String getMsg(int code) {
-        String msg = "";
-        switch (code) {
-            default:
-                msg = "网络错误";
-                break;
+    public static UserApi getUserApi() {
+        if (mUserApi == null) {
+            mUserApi = getDefault().build(UserApi.class);
         }
-        return msg;
+        return mUserApi;
     }
+
 }

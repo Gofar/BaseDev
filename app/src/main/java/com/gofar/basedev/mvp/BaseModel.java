@@ -18,7 +18,7 @@ package com.gofar.basedev.mvp;
 
 /**
  * Author: lcf
- * Description:
+ * Description: Model基类
  * Since: 1.0
  * Date: 2017/5/31 10:11
  */

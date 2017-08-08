@@ -14,36 +14,32 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
+package com.gofar.basedev.mvp.extension;
+
+import com.gofar.basedev.mvp.BaseView;
+
+import java.util.List;
 
 /**
  * Author: lcf
- * Description: 自定义错误类
+ * Description: 列表基类View
  * Since: 1.0
- * Date: 2017/5/27 15:07
+ * Date: 2017/7/14 15:03
  */
-public class ApiException extends RuntimeException {
+public interface BaseListView<T> extends BaseView {
+    void showEmpty();
 
-    public ApiException(String msg) {
-        super(msg);
-    }
+    void showRetry();
 
-    public ApiException(int code) {
-        this(getMsg(code));
-    }
+    void loadMoreFailed();
 
-    /**
-     * 将code转为错误信息
-     * @param code code
-     * @return
-     */
-    private static String getMsg(int code) {
-        String msg = "";
-        switch (code) {
-            default:
-                msg = "网络错误";
-                break;
-        }
-        return msg;
-    }
+    void loadMoreEnd(boolean gone);
+
+    void loadMoreCompleted();
+
+    void refreshCompleted();
+
+    void newData(List<T> data);
+
+    void addData(List<T> data);
 }

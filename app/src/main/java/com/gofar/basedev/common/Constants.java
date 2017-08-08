@@ -40,8 +40,8 @@ public interface Constants {
     String EXTRAS_TITLE = "title";
 
     /**
-     * 分页请求数量
+     * 分页请求默认数量
      */
-    int LIMIT_NUM=10;
+    int LIMIT_NUM = 15;
 
 }

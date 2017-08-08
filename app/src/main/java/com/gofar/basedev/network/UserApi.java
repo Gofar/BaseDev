@@ -14,36 +14,30 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
+package com.gofar.basedev.network;
+
+import com.gofar.basedev.entity.BaseEntity;
+import com.gofar.basedev.entity.UserEntity;
+
+import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * Author: lcf
- * Description: 自定义错误类
+ * Description:
  * Since: 1.0
- * Date: 2017/5/27 15:07
+ * Date: 2017/5/27 15:08
  */
-public class ApiException extends RuntimeException {
+public interface UserApi {
 
-    public ApiException(String msg) {
-        super(msg);
-    }
+    Observable<BaseEntity<UserEntity>> register();
 
-    public ApiException(int code) {
-        this(getMsg(code));
-    }
+    Observable<BaseEntity<UserEntity>> login(String userName, String password);
 
-    /**
-     * 将code转为错误信息
-     * @param code code
-     * @return
-     */
-    private static String getMsg(int code) {
-        String msg = "";
-        switch (code) {
-            default:
-                msg = "网络错误";
-                break;
-        }
-        return msg;
-    }
+    Observable<BaseEntity> changePsd(String oldPsd, String newPsd);
+
+    Observable<BaseEntity<List<UserEntity>>> getUserList(int page, int limit);
+
+    Observable<BaseEntity<UserEntity>> getUserDetails(int UserId);
 }

@@ -23,5 +23,5 @@ package com.gofar.basedev.http;
  * Date: 2017/6/22 15:51
  */
 public class StatusCode {
-    public static final int SUCCESS = 0;
+    public static final int SUCCESS = 0;  // success
 }

@@ -16,34 +16,25 @@
 
 package com.gofar.basedev.http;
 
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+
 /**
  * Author: lcf
- * Description: 自定义错误类
+ * Description: 回调结果处理,只处理onNext和onError
  * Since: 1.0
- * Date: 2017/5/27 15:07
+ * Date: 2017/6/2 15:50
  */
-public class ApiException extends RuntimeException {
+public abstract class HandlerObserver<T> implements Observer<T> {
 
-    public ApiException(String msg) {
-        super(msg);
+    @Override
+    public void onSubscribe(@NonNull Disposable d) {
+
     }
 
-    public ApiException(int code) {
-        this(getMsg(code));
-    }
+    @Override
+    public void onComplete() {
 
-    /**
-     * 将code转为错误信息
-     * @param code code
-     * @return
-     */
-    private static String getMsg(int code) {
-        String msg = "";
-        switch (code) {
-            default:
-                msg = "网络错误";
-                break;
-        }
-        return msg;
     }
 }

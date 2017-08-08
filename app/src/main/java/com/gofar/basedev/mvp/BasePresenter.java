@@ -16,31 +16,40 @@
 
 package com.gofar.basedev.mvp;
 
+import com.gofar.basedev.utils.ReflectUtils;
+
 import org.greenrobot.eventbus.EventBus;
+
 
 /**
  * Author: lcf
- * Description:
+ * Description: Presenter基类
  * Since: 1.0
- * Date: 2017/6/7 11:34
+ * Date: 2017/7/14 11:32
  */
-public abstract class BasePresenter<M extends BaseModel, V extends BaseView> {
+public abstract class BasePresenter<M extends BaseModel, V extends BaseView, T> {
     protected M mModel;
     protected V mView;
 
-    public BasePresenter(M mModel, V mView) {
-        this.mModel = mModel;
+    public BasePresenter(V mView) {
         this.mView = mView;
+        this.mModel = ReflectUtils.create(this, 0); // 反射创建Model
         onStart();
     }
 
+    /**
+     * start
+     */
     private void onStart() {
         if (useEventBus()) {
             EventBus.getDefault().register(this);
         }
     }
 
-    protected void onDestroy() {
+    /**
+     * destroy
+     */
+    public void onDestroy() {
         if (useEventBus()) {
             EventBus.getDefault().unregister(this);
         }
@@ -48,11 +57,53 @@ public abstract class BasePresenter<M extends BaseModel, V extends BaseView> {
         mView = null;
     }
 
+    /**
+     * boolean user EventBus
+     *
+     * @return true or false
+     */
     protected boolean useEventBus() {
         return false;
     }
 
-    protected abstract void handlerLoading();
+    /**
+     * get the mView
+     *
+     * @return mView
+     */
+    public V getView() {
+        return mView;
+    }
 
-    protected abstract void handlerError(Throwable e);
+    /**
+     * show loading view
+     */
+    public abstract void onHandlerLoading();
+
+    /**
+     * handler result
+     *
+     * @param t data from network
+     */
+    public abstract void onHandlerResult(T t);
+
+    /**
+     * handler Error
+     *
+     * @param e Throwable
+     */
+    public abstract void onHandlerError(Throwable e);
+
+    /**
+     * save data if need
+     *
+     * @param needCache true or false
+     * @param t         data
+     */
+    public void cacheData(boolean needCache, T t) {
+        if (!needCache) {
+            return;
+        }
+        // cache some data,like use SharedPreference
+    }
 }

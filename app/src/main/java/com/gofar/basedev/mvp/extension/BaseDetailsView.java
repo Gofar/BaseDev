@@ -14,36 +14,20 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.http;
+package com.gofar.basedev.mvp.extension;
+
+import com.gofar.basedev.mvp.BaseView;
 
 /**
  * Author: lcf
- * Description: 自定义错误类
+ * Description: 详情页基类View
  * Since: 1.0
- * Date: 2017/5/27 15:07
+ * Date: 2017/7/14 11:43
  */
-public class ApiException extends RuntimeException {
+public interface BaseDetailsView<T> extends BaseView {
+    void returnData(T t);
 
-    public ApiException(String msg) {
-        super(msg);
-    }
+    void showEmpty();
 
-    public ApiException(int code) {
-        this(getMsg(code));
-    }
-
-    /**
-     * 将code转为错误信息
-     * @param code code
-     * @return
-     */
-    private static String getMsg(int code) {
-        String msg = "";
-        switch (code) {
-            default:
-                msg = "网络错误";
-                break;
-        }
-        return msg;
-    }
+    void showRetry();
 }
