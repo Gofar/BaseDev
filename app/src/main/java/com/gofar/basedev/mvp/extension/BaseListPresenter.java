@@ -93,4 +93,6 @@ public abstract class BaseListPresenter<M extends BaseModel, V extends BaseListV
             mView.loadMoreFailed();
         }
     }
+
+    public abstract void loadData(@LoadListHelper.LoadType int type);
 }
