@@ -14,36 +14,29 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.common;
+package com.gofar.basedev.ui;
 
+import android.support.annotation.Nullable;
 
-import com.gofar.basedev.BuildConfig;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.gofar.basedev.entity.UserEntity;
+
+import java.util.List;
 
 /**
  * Author: lcf
- * Description: 常量
+ * Description:
  * Since: 1.0
- * Date: 2017/4/27 10:26
+ * Date: 2017/8/11 15:49
  */
+public class UserItemAdapter extends BaseQuickAdapter<UserEntity,BaseViewHolder>{
+    public UserItemAdapter(@Nullable List<UserEntity> data) {
+        super(data);
+    }
 
-public interface Constants {
-    /**
-     * 发版时将其置为false true为开发模式 false为外网正式
-     */
-    boolean DEBUG = BuildConfig.LOG_DEBUG;
+    @Override
+    protected void convert(BaseViewHolder helper, UserEntity item) {
 
-    // Intent、Bundle传递数据的key
-    String EXTRAS_ID = "id";
-    String EXTRAS_TYPE = "type";
-    String EXTRAS_DATA = "data";
-    String EXTRAS_FROM = "from";
-    String EXTRAS_TITLE = "title";
-
-    /**
-     * 分页请求默认数量
-     */
-    String LIMIT_TEXT="limit";
-    int LIMIT_NUM = 15;
-    String PAGE_TEXT="page";
-
+    }
 }

@@ -21,6 +21,7 @@ import com.gofar.basedev.mvp.BaseModel;
 import com.gofar.basedev.mvp.BasePresenter;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: lcf
@@ -28,8 +29,9 @@ import java.util.List;
  * Since: 1.0
  * Date: 2017/7/14 15:08
  */
-public abstract class BaseListPresenter<M extends BaseModel, V extends BaseListView<T>, T> extends BasePresenter<M, V,List<T>> {
+public abstract class BaseListPresenter<M extends BaseModel, V extends BaseListView<T>, T> extends BasePresenter<M, V, List<T>> {
     protected LoadListHelper mLoadHelper;
+    protected Map<String, String> mParams; // 请求参数
 
     public BaseListPresenter(V mView) {
         super(mView);
@@ -95,4 +97,13 @@ public abstract class BaseListPresenter<M extends BaseModel, V extends BaseListV
     }
 
     public abstract void loadData(@LoadListHelper.LoadType int type);
+
+    /**
+     * set request params
+     *
+     * @param params request params
+     */
+    public void setParams(Map<String, String> params) {
+        this.mParams = params;
+    }
 }

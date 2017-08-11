@@ -20,13 +20,17 @@ package com.gofar.basedev.mvp.extension;
 import com.gofar.basedev.mvp.BaseModel;
 import com.gofar.basedev.mvp.BasePresenter;
 
+import java.util.Map;
+
 /**
  * Author: lcf
  * Description: 详情页基类Presenter
  * Since: 1.0
  * Date: 2017/7/14 11:46
  */
-public abstract class BaseDetailsPresenter<M extends BaseModel, V extends BaseDetailsView<T>, T> extends BasePresenter<M, V,T> {
+public abstract class BaseDetailsPresenter<M extends BaseModel, V extends BaseDetailsView<T>, T> extends BasePresenter<M, V, T> {
+    protected Map<String, String> mParams;
+
     public BaseDetailsPresenter(V mView) {
         super(mView);
     }
@@ -52,4 +56,17 @@ public abstract class BaseDetailsPresenter<M extends BaseModel, V extends BaseDe
         mView.hideLoading();
         mView.showRetry();
     }
+
+    /**
+     * set requset params
+     * @param params requset params
+     */
+    public void setParams(Map<String, String> params) {
+        this.mParams = params;
+    }
+
+    /**
+     * load data
+     */
+    public abstract void load();
 }

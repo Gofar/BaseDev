@@ -53,12 +53,12 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseLi
 
     private LoadingAndRetryManager mLoadingAndRetryManager;
 
-    private BaseQuickAdapter<T, ? extends BaseViewHolder> mAdapter;
-    private BaseListPresenter mPresenter;
+    protected BaseQuickAdapter<T, ? extends BaseViewHolder> mAdapter;
+    protected BaseListPresenter mPresenter;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.base_list_fragment;
+        return R.layout.base_list_layout;
     }
 
     @Override
@@ -71,7 +71,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseLi
             }
         });
 
-        initRecyclerView();
+        initRecyclerView(mRecyclerView);
         mAdapter = getAdapter();
         if (mAdapter == null) {
             throw new NullPointerException("Adapter is null");
@@ -83,9 +83,11 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseLi
 
     @Override
     protected void initData() {
-        mPresenter = getPresenter();
+        initPresenter();
         if (mPresenter != null) {
             mPresenter.loadData(LoadListHelper.FIRST_LOAD);
+        }else{
+            showEmpty();
         }
     }
 
@@ -160,7 +162,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseLi
     /**
      * set retry
      *
-     * @param retryView
+     * @param retryView retryView
      */
     private void setRetry(View retryView) {
         retryView.findViewById(R.id.id_btn_retry).setOnClickListener(new View.OnClickListener() {
@@ -174,8 +176,8 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseLi
     /**
      * init RecyclerView
      */
-    protected void initRecyclerView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    protected void initRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     /**
@@ -186,8 +188,9 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseLi
     protected abstract BaseQuickAdapter<T, ? extends BaseViewHolder> getAdapter();
 
     /**
-     * get presenter
+     * init presenter
+     *
      * @return
      */
-    protected abstract BaseListPresenter getPresenter();
+    protected abstract void initPresenter();
 }

@@ -151,7 +151,7 @@ public class RxHelper {
                 });
     }
 
-    public static <T> void doRx1(Observable<BaseEntity<T>> observable, BasePresenter presenter) {
+    public static <T> void doRx1(Observable<BaseEntity<T>> observable, BasePresenter<? extends BaseModel, ? extends BaseView, T> presenter) {
         doRx1(observable, presenter, false);
     }
 

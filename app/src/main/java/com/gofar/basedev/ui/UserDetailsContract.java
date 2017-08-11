@@ -14,36 +14,28 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.common;
+package com.gofar.basedev.ui;
 
+import com.gofar.basedev.entity.BaseEntity;
+import com.gofar.basedev.entity.UserEntity;
+import com.gofar.basedev.mvp.BaseModel;
+import com.gofar.basedev.mvp.extension.BaseDetailsView;
 
-import com.gofar.basedev.BuildConfig;
+import java.util.Map;
+
+import io.reactivex.Observable;
 
 /**
  * Author: lcf
- * Description: 常量
+ * Description:
  * Since: 1.0
- * Date: 2017/4/27 10:26
+ * Date: 2017/8/11 16:38
  */
+public interface UserDetailsContract {
+    interface  View extends BaseDetailsView<UserEntity>{
 
-public interface Constants {
-    /**
-     * 发版时将其置为false true为开发模式 false为外网正式
-     */
-    boolean DEBUG = BuildConfig.LOG_DEBUG;
-
-    // Intent、Bundle传递数据的key
-    String EXTRAS_ID = "id";
-    String EXTRAS_TYPE = "type";
-    String EXTRAS_DATA = "data";
-    String EXTRAS_FROM = "from";
-    String EXTRAS_TITLE = "title";
-
-    /**
-     * 分页请求默认数量
-     */
-    String LIMIT_TEXT="limit";
-    int LIMIT_NUM = 15;
-    String PAGE_TEXT="page";
-
+    }
+    interface Model extends BaseModel{
+        Observable<BaseEntity<UserEntity>> getUserDetails(Map<String,String> parmas);
+    }
 }
