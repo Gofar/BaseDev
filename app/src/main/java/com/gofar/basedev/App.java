@@ -18,7 +18,8 @@ package com.gofar.basedev;
 
 import android.app.Application;
 
-import com.gofar.basedev.loading.LoadingAndRetryManager;
+import com.gofar.library.loading.LoadingAndRetryManager;
+
 
 /**
  * Author: lcf

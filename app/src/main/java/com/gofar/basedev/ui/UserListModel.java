@@ -16,9 +16,9 @@
 
 package com.gofar.basedev.ui;
 
-import com.gofar.basedev.entity.BaseEntity;
 import com.gofar.basedev.entity.UserEntity;
 import com.gofar.basedev.network.ApiFactory;
+import com.gofar.library.entity.BaseEntity;
 
 import java.util.List;
 import java.util.Map;

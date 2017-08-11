@@ -14,25 +14,32 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.ui;
+package com.gofar.library.mvp.extension;
 
-import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.network.ApiFactory;
-import com.gofar.library.entity.BaseEntity;
+import com.gofar.library.mvp.BaseView;
 
-import java.util.Map;
-
-import io.reactivex.Observable;
+import java.util.List;
 
 /**
  * Author: lcf
- * Description:
+ * Description: 列表基类View
  * Since: 1.0
- * Date: 2017/8/11 16:40
+ * Date: 2017/7/14 15:03
  */
-public class UserDetailsModel implements UserDetailsContract.Model{
-    @Override
-    public Observable<BaseEntity<UserEntity>> getUserDetails(Map<String, String> parmas) {
-        return ApiFactory.getUserApi().getUserDetails(111);
-    }
+public interface BaseListView<T> extends BaseView {
+    void showEmpty();
+
+    void showRetry();
+
+    void loadMoreFailed();
+
+    void loadMoreEnd(boolean gone);
+
+    void loadMoreCompleted();
+
+    void refreshCompleted();
+
+    void newData(List<T> data);
+
+    void addData(List<T> data);
 }

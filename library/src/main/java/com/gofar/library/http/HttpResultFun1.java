@@ -14,25 +14,29 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.ui;
+package com.gofar.library.http;
 
-import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.network.ApiFactory;
 import com.gofar.library.entity.BaseEntity;
 
-import java.util.Map;
-
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 
 /**
  * Author: lcf
- * Description:
+ * Description: 判断请求结果是否成功，错误处理；不转换数据(只关心是否成功)
  * Since: 1.0
- * Date: 2017/8/11 16:40
+ * Date: 2017/6/8 10:04
  */
-public class UserDetailsModel implements UserDetailsContract.Model{
+public class HttpResultFun1 implements Function<BaseEntity, ObservableSource<BaseEntity>> {
+
     @Override
-    public Observable<BaseEntity<UserEntity>> getUserDetails(Map<String, String> parmas) {
-        return ApiFactory.getUserApi().getUserDetails(111);
+    public Observable<BaseEntity> apply(@NonNull BaseEntity baseEntity) throws Exception {
+        if (baseEntity.isSuccess()) {
+            return Observable.just(baseEntity);
+        } else {
+            return Observable.error(new ApiException(baseEntity.getMsg()));
+        }
     }
 }

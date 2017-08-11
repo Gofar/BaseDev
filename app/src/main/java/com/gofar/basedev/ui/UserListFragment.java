@@ -22,8 +22,8 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.gofar.basedev.base.extension.BaseListFragment;
 import com.gofar.basedev.entity.UserEntity;
+import com.gofar.library.base.extension.BaseListFragment;
 
 /**
  * Author: lcf

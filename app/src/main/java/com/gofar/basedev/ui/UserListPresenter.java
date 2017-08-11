@@ -18,11 +18,11 @@ package com.gofar.basedev.ui;
 
 import android.text.TextUtils;
 
-import com.gofar.basedev.common.Constants;
 import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.http.RxHelper;
-import com.gofar.basedev.mvp.extension.BaseListPresenter;
-import com.gofar.basedev.mvp.extension.LoadListHelper;
+import com.gofar.library.common.Constants;
+import com.gofar.library.http.RxHelper;
+import com.gofar.library.mvp.extension.BaseListPresenter;
+import com.gofar.library.mvp.extension.LoadListHelper;
 
 import java.util.HashMap;
 

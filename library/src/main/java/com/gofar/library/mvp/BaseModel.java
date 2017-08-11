@@ -14,25 +14,13 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.ui;
-
-import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.network.ApiFactory;
-import com.gofar.library.entity.BaseEntity;
-
-import java.util.Map;
-
-import io.reactivex.Observable;
+package com.gofar.library.mvp;
 
 /**
  * Author: lcf
- * Description:
+ * Description: Model基类
  * Since: 1.0
- * Date: 2017/8/11 16:40
+ * Date: 2017/5/31 10:11
  */
-public class UserDetailsModel implements UserDetailsContract.Model{
-    @Override
-    public Observable<BaseEntity<UserEntity>> getUserDetails(Map<String, String> parmas) {
-        return ApiFactory.getUserApi().getUserDetails(111);
-    }
+public interface BaseModel {
 }

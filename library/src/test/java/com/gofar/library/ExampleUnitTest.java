@@ -14,25 +14,20 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.ui;
+package com.gofar.library;
 
-import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.network.ApiFactory;
-import com.gofar.library.entity.BaseEntity;
+import org.junit.Test;
 
-import java.util.Map;
-
-import io.reactivex.Observable;
+import static org.junit.Assert.*;
 
 /**
- * Author: lcf
- * Description:
- * Since: 1.0
- * Date: 2017/8/11 16:40
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class UserDetailsModel implements UserDetailsContract.Model{
-    @Override
-    public Observable<BaseEntity<UserEntity>> getUserDetails(Map<String, String> parmas) {
-        return ApiFactory.getUserApi().getUserDetails(111);
+public class ExampleUnitTest {
+    @Test
+    public void addition_isCorrect() throws Exception {
+        assertEquals(4, 2 + 2);
     }
 }

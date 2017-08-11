@@ -14,25 +14,36 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.ui;
-
-import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.network.ApiFactory;
-import com.gofar.library.entity.BaseEntity;
-
-import java.util.Map;
-
-import io.reactivex.Observable;
+package com.gofar.library.http;
 
 /**
  * Author: lcf
- * Description:
+ * Description: 自定义错误类
  * Since: 1.0
- * Date: 2017/8/11 16:40
+ * Date: 2017/5/27 15:07
  */
-public class UserDetailsModel implements UserDetailsContract.Model{
-    @Override
-    public Observable<BaseEntity<UserEntity>> getUserDetails(Map<String, String> parmas) {
-        return ApiFactory.getUserApi().getUserDetails(111);
+public class ApiException extends RuntimeException {
+
+    public ApiException(String msg) {
+        super(msg);
+    }
+
+    public ApiException(int code) {
+        this(getMsg(code));
+    }
+
+    /**
+     * 将code转为错误信息
+     * @param code code
+     * @return
+     */
+    private static String getMsg(int code) {
+        String msg = "";
+        switch (code) {
+            default:
+                msg = "网络错误";
+                break;
+        }
+        return msg;
     }
 }

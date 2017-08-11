@@ -30,7 +30,7 @@ import java.util.List;
  * Since: 1.0
  * Date: 2017/8/11 15:49
  */
-public class UserItemAdapter extends BaseQuickAdapter<UserEntity,BaseViewHolder>{
+public class UserItemAdapter extends BaseQuickAdapter<UserEntity,BaseViewHolder> {
     public UserItemAdapter(@Nullable List<UserEntity> data) {
         super(data);
     }

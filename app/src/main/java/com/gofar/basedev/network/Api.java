@@ -16,7 +16,7 @@
 
 package com.gofar.basedev.network;
 
-import com.gofar.basedev.utils.FileUtils;
+import com.gofar.library.utils.FileUtils;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;

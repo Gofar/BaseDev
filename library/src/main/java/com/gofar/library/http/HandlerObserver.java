@@ -14,25 +14,27 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.ui;
+package com.gofar.library.http;
 
-import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.network.ApiFactory;
-import com.gofar.library.entity.BaseEntity;
-
-import java.util.Map;
-
-import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Author: lcf
- * Description:
+ * Description: 回调结果处理,只处理onNext和onError
  * Since: 1.0
- * Date: 2017/8/11 16:40
+ * Date: 2017/6/2 15:50
  */
-public class UserDetailsModel implements UserDetailsContract.Model{
+public abstract class HandlerObserver<T> implements Observer<T> {
+
     @Override
-    public Observable<BaseEntity<UserEntity>> getUserDetails(Map<String, String> parmas) {
-        return ApiFactory.getUserApi().getUserDetails(111);
+    public void onSubscribe(@NonNull Disposable d) {
+
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 }

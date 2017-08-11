@@ -14,25 +14,31 @@
  * limitations under the License.
  */
 
-package com.gofar.basedev.ui;
+package com.gofar.library.common;
 
-import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.network.ApiFactory;
-import com.gofar.library.entity.BaseEntity;
 
-import java.util.Map;
-
-import io.reactivex.Observable;
 
 /**
  * Author: lcf
- * Description:
+ * Description: 常量
  * Since: 1.0
- * Date: 2017/8/11 16:40
+ * Date: 2017/4/27 10:26
  */
-public class UserDetailsModel implements UserDetailsContract.Model{
-    @Override
-    public Observable<BaseEntity<UserEntity>> getUserDetails(Map<String, String> parmas) {
-        return ApiFactory.getUserApi().getUserDetails(111);
-    }
+
+public interface Constants {
+
+    // Intent、Bundle传递数据的key
+    String EXTRAS_ID = "id";
+    String EXTRAS_TYPE = "type";
+    String EXTRAS_DATA = "data";
+    String EXTRAS_FROM = "from";
+    String EXTRAS_TITLE = "title";
+
+    /**
+     * 分页请求默认数量
+     */
+    String LIMIT_TEXT="limit";
+    int LIMIT_NUM = 15;
+    String PAGE_TEXT="page";
+
 }

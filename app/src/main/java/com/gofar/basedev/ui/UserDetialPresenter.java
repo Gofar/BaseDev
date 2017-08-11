@@ -17,9 +17,8 @@
 package com.gofar.basedev.ui;
 
 import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.http.RxHelper;
-import com.gofar.basedev.mvp.extension.BaseDetailsPresenter;
-import com.gofar.basedev.ui.UserDetailsContract;
+import com.gofar.library.http.RxHelper;
+import com.gofar.library.mvp.extension.BaseDetailsPresenter;
 
 import java.util.HashMap;
 

@@ -16,8 +16,8 @@
 
 package com.gofar.basedev.network;
 
-import com.gofar.basedev.entity.BaseEntity;
 import com.gofar.basedev.entity.UserEntity;
+import com.gofar.library.entity.BaseEntity;
 
 import java.util.List;
 

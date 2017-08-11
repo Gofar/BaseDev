@@ -16,10 +16,10 @@
 
 package com.gofar.basedev.ui;
 
-import com.gofar.basedev.entity.BaseEntity;
 import com.gofar.basedev.entity.UserEntity;
-import com.gofar.basedev.mvp.BaseModel;
-import com.gofar.basedev.mvp.extension.BaseListView;
+import com.gofar.library.entity.BaseEntity;
+import com.gofar.library.mvp.BaseModel;
+import com.gofar.library.mvp.extension.BaseListView;
 
 import java.util.List;
 import java.util.Map;
@@ -33,10 +33,10 @@ import io.reactivex.Observable;
  * Date: 2017/8/11 15:06
  */
 public interface UserListContract {
-    interface View extends BaseListView<UserEntity>{
+    interface View extends BaseListView<UserEntity> {
 
     }
-    interface Model extends BaseModel{
+    interface Model extends BaseModel {
         Observable<BaseEntity<List<UserEntity>>> getUserList(Map<String,String> params);
     }
 }
